@@ -27,12 +27,9 @@ public class Dispatcher {
         interceptors.remove(interceptor);
     }
 
-    public void dispatchClientRequestInterceptorPaymentService() throws IOException {
-        ArrayList<Interceptor> interceptorList;
-        interceptorList = interceptors;
-        for (int i = 0; i < interceptorList.size(); i++) {
-            ConcretePayInterceptor concretePayInterceptor = (ConcretePayInterceptor) interceptorList.get(i);
-            concretePayInterceptor.processPayment(i);
+    public void dispatchClientRequestInterceptorPaymentService(double amount) throws IOException {
+        for (Interceptor interceptor : interceptors) {
+            interceptor.processPayment(amount);
         }
     }
 

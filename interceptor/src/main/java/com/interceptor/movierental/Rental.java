@@ -1,17 +1,19 @@
 package com.interceptor.movierental;
 
+import java.io.IOException;
+
+import com.interceptor.interceptorpackage.ConcretePayInterceptor;
+import com.interceptor.interceptorpackage.Dispatcher;
 import com.interceptor.interceptorpackage.Interceptor;
 
 public class Rental {
 
     private Movie _movie;
     private int _daysRented;
-    private Interceptor _paymentInterceptor;
 
-    public Rental(Movie movie, int daysRented, Interceptor interceptor) {
+    public Rental(Movie movie, int daysRented) {
         _movie = movie;
         _daysRented = daysRented;
-        _paymentInterceptor = interceptor;
     }
 
     public int getDaysRented() {
@@ -30,9 +32,12 @@ public class Rental {
         return _movie.getFrequentRenterPoints(_daysRented);
     }
 
-    public void processPayment() {
+    public void processPayment(Customer customer) throws IOException {
         double amount = getCharge();
-        _paymentInterceptor.processPayment(amount);
+        Dispatcher dispatcher = Dispatcher.getInstance();
+        Interceptor paymentInterceptor = new ConcretePayInterceptor();
+        dispatcher.register(paymentInterceptor);
+        dispatcher.dispatchClientRequestInterceptorPaymentService(amount);
     }
 
 }

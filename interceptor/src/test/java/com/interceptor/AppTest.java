@@ -4,14 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.interceptor.interceptorpackage.ConcretePayInterceptor;
-import com.interceptor.interceptorpackage.Dispatcher;
-import com.interceptor.interceptorpackage.Interceptor;
 import com.interceptor.movierental.Customer;
 import com.interceptor.movierental.Movie;
 import com.interceptor.movierental.Rental;
@@ -38,10 +34,8 @@ public class AppTest {
 
     @Test
     public void testPayment() throws IOException {
-        Dispatcher dispatcher = Dispatcher.getInstance();
-        Interceptor interceptor = new ConcretePayInterceptor();
-        dispatcher.register(interceptor);
-
+        c.addRental(new Rental(movies[1], 3));
+        c.processPayments();
     }
 
 }

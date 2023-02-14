@@ -1,5 +1,6 @@
 package com.interceptor.movierental;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,9 @@ public class Customer {
         return result;
     }
 
-    public void processPayments() {
+    public void processPayments() throws IOException {
         for (Rental rental : _rentals) {
-            rental.processPayment();
+            rental.processPayment(this);
         }
     }
 
