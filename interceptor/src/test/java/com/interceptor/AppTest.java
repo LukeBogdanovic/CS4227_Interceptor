@@ -30,12 +30,12 @@ public class AppTest {
                 new Movie("Puss In Boots: The Last Wish", Movie.NEW_RELEASE),
                 new Movie("Indiana Jones and The Raiders of the Lost Ark", Movie.REGULAR)
         };
+        c.addRental(new Rental(movies[1], 3));
     }
 
     @Test
     public void testPayment() throws IOException {
-        c.addRental(new Rental(movies[1], 3));
-        c.processPayments();
+
     }
 
 }

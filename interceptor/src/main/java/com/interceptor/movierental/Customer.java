@@ -1,6 +1,5 @@
 package com.interceptor.movierental;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +30,15 @@ public class Customer {
         return result;
     }
 
-    public void processPayments() throws IOException {
+    public String htmlStatement() {
+        String result = "<h1>Rentals for <em>" + getName() + "</em></h1><p>\n";
         for (Rental rental : _rentals) {
-            rental.processPayment(this);
+            result += rental.getMovie().getTitle() + ": " + String.valueOf(rental.getCharge()) + "<br>\n";
         }
+        result += "<p>You owe <em>" + String.valueOf(getTotalCharge()) + "</em><p>\n";
+        result += "On this rental you earned <em>" + String.valueOf(getTotalFrequentRenterPoints())
+                + "</em> frequent renter points<p>";
+        return result;
     }
 
     private double getTotalCharge() {

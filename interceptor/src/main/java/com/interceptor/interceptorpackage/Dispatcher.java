@@ -29,7 +29,7 @@ public class Dispatcher {
 
     public void dispatchClientRequestInterceptorPaymentService(double amount) throws IOException {
         for (Interceptor interceptor : interceptors) {
-            interceptor.processPayment(amount);
+            interceptor.execute();
         }
     }
 
