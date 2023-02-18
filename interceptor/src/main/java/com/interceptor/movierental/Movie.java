@@ -1,5 +1,9 @@
 package com.interceptor.movierental;
 
+import com.interceptor.interceptorpackage.Dispatcher;
+import com.interceptor.interceptorpackage.PaymentContextObject;
+import com.interceptor.interceptorpackage.interfaces.IContext;
+
 public class Movie {
 
     public static final int CHILDRENS = 2;
@@ -8,17 +12,19 @@ public class Movie {
 
     private String _title;
     private Price _price;
+    private Dispatcher dispatcher;
 
-    public Movie(String title, int priceCode) {
+    public Movie(String title, int priceCode, Dispatcher dispatcher) {
         _title = title;
+        this.dispatcher = dispatcher;
         setPriceCode(priceCode);
     }
 
-    public int getPriceCode() {
+    private int getPriceCode() {
         return _price.getPriceCode();
     }
 
-    public void setPriceCode(int arg) {
+    private void setPriceCode(int arg) {
         switch (arg) {
             case Movie.REGULAR:
                 _price = new RegularPrice();
@@ -32,6 +38,8 @@ public class Movie {
             default:
                 throw new IllegalArgumentException("Incorrect Price Code");
         }
+        IContext context = new PaymentContextObject(this, getCharge(arg));
+        dispatcher.dispatchClientRequestInterceptor(context);
     }
 
     public String getTitle() {
@@ -43,10 +51,7 @@ public class Movie {
     }
 
     public int getFrequentRenterPoints(int daysRented) {
-        if ((getPriceCode() == Movie.NEW_RELEASE) && daysRented > 1)
-            return 2;
-        else
-            return 1;
+        return _price.getFrequentRenterPoints(daysRented);
     }
 
 }

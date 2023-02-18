@@ -3,17 +3,28 @@ package com.interceptor.movierental;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.interceptor.interceptorpackage.Dispatcher;
+import com.interceptor.interceptorpackage.LoggingContextObject;
+
 public class Customer {
 
     private String _name;
     private List<Rental> _rentals = new ArrayList<Rental>();
+    private Dispatcher dispatcher;
 
-    public Customer(String name) {
+    public Customer(String name, Dispatcher dispatcher) {
         _name = name;
+        this.dispatcher = dispatcher;
     }
 
+    /**
+     * Adding a {@link Rental} to the _rentals {@link ArrayList}.
+     * 
+     * @param arg
+     */
     public void addRental(Rental arg) {
         _rentals.add(arg);
+        dispatcher.dispatchClientRequestInterceptor(new LoggingContextObject(this, arg));
     }
 
     public String getName() {
