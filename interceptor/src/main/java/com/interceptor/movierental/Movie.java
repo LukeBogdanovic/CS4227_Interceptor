@@ -14,17 +14,17 @@ public class Movie {
     private Price _price;
     private Dispatcher dispatcher;
 
-    public Movie(String title, int priceCode, Dispatcher dispatcher) {
+    public Movie(String title, int priceCode, int daysRented, Dispatcher dispatcher) {
         _title = title;
         this.dispatcher = dispatcher;
-        setPriceCode(priceCode);
+        setPriceCode(priceCode, daysRented);
     }
 
     private int getPriceCode() {
         return _price.getPriceCode();
     }
 
-    private void setPriceCode(int arg) {
+    private void setPriceCode(int arg, int daysRented) {
         switch (arg) {
             case Movie.REGULAR:
                 _price = new RegularPrice();
@@ -38,7 +38,7 @@ public class Movie {
             default:
                 throw new IllegalArgumentException("Incorrect Price Code");
         }
-        IContext context = new PaymentContextObject(this, getCharge(arg));
+        IContext context = new PaymentContextObject(this, getCharge(daysRented));
         dispatcher.dispatchClientRequestInterceptor(context);
     }
 
