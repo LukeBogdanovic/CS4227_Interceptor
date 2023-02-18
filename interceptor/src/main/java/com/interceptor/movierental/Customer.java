@@ -22,7 +22,7 @@ public class Customer {
      * 
      * @param arg
      */
-    public void addRental(Rental arg) {
+    public void addRental(Rental arg, double amount) {
         _rentals.add(arg);
         dispatcher.dispatchClientRequestInterceptor(new LoggingContextObject(this, arg));
     }

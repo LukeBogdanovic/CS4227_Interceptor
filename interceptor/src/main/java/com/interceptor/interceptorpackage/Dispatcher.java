@@ -1,7 +1,9 @@
 package com.interceptor.interceptorpackage;
 
-import java.io.IOException;
 import java.util.ArrayList;
+
+import com.interceptor.interceptorpackage.interfaces.IContext;
+import com.interceptor.interceptorpackage.interfaces.Interceptor;
 
 public class Dispatcher {
 
@@ -9,10 +11,10 @@ public class Dispatcher {
     private static Dispatcher dispatcher = null;
 
     private Dispatcher() {
-        interceptors = new ArrayList<>();
+        this.interceptors = new ArrayList<>();
     }
 
-    public static Dispatcher getInstance() throws IOException {
+    public static Dispatcher getInstance() {
         if (dispatcher == null) {
             dispatcher = new Dispatcher();
         }
@@ -27,9 +29,11 @@ public class Dispatcher {
         interceptors.remove(interceptor);
     }
 
-    public void dispatchClientRequestInterceptorPaymentService(double amount) throws IOException {
+    public void dispatchClientRequestInterceptor(IContext contextObject) {
         for (Interceptor interceptor : interceptors) {
-            interceptor.execute();
+            interceptor.preHandle(contextObject);
+            contextObject.execute(interceptor);
+            interceptor.postHandle(contextObject);
         }
     }
 
