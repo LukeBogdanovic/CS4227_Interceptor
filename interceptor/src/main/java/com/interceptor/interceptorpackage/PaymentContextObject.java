@@ -1,11 +1,8 @@
 package com.interceptor.interceptorpackage;
 
-import java.util.List;
-
 import com.interceptor.interceptorpackage.interfaces.IContext;
 import com.interceptor.interceptorpackage.interfaces.Interceptor;
 import com.interceptor.movierental.Customer;
-import com.interceptor.movierental.Rental;
 
 public class PaymentContextObject implements IContext {
 
@@ -24,10 +21,6 @@ public class PaymentContextObject implements IContext {
     public Customer getCustomer() {
         return customer;
     }
-
-    // public String printRentals() {
-    // List<Rental> rentals = customer.getRentals();
-    // }
 
     @Override
     public void execute(Interceptor interceptor) {
