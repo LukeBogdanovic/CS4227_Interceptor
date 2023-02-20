@@ -26,4 +26,9 @@ public class Rental {
         return _movie.getFrequentRenterPoints(_daysRented);
     }
 
+    @Override
+    public String toString() {
+        return _movie.getTitle();
+    }
+
 }

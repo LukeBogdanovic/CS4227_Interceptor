@@ -10,7 +10,8 @@ public class ConcretePaymentInterceptor implements Interceptor {
         if (contextObject instanceof PaymentContextObject) {
             PaymentContextObject context = (PaymentContextObject) contextObject;
             System.out.println("Payment of amount " + context.getAmount()
-                    + " has been requested from the customer for rental of the movie: '" + context.getMovie().getTitle()
+                    + " has been requested from the customer for rental of the movies: '"
+                    + context.getCustomer().getRentals().toString()
                     + "'.");
         }
     }
@@ -20,7 +21,8 @@ public class ConcretePaymentInterceptor implements Interceptor {
         if (contextObject instanceof PaymentContextObject) {
             PaymentContextObject context = (PaymentContextObject) contextObject;
             System.out.println("Payment of amount " + context.getAmount()
-                    + " has been received for the rental of movie: '" + context.getMovie().getTitle() + "'.");
+                    + " has been received for the rental of movies: '" + context.getCustomer().getRentals().toString()
+                    + "'.");
         }
     }
 

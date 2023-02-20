@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.interceptor.interceptorpackage.Dispatcher;
 import com.interceptor.interceptorpackage.LoggingContextObject;
+import com.interceptor.interceptorpackage.PaymentContextObject;
 
 public class Customer {
 
@@ -31,6 +32,10 @@ public class Customer {
         return _name;
     }
 
+    public List<Rental> getRentals() {
+        return _rentals;
+    }
+
     public String statement() {
         String result = "Rental Record for " + getName() + "\n";
         for (Rental rental : _rentals) {
@@ -38,6 +43,7 @@ public class Customer {
         }
         result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
         result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
+        dispatcher.dispatchClientRequestInterceptor(new PaymentContextObject(this, getTotalCharge()));
         return result;
     }
 
