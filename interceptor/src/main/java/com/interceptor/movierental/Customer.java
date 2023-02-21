@@ -21,6 +21,9 @@ public class Customer {
     /**
      * Adding a {@link Rental} to the _rentals {@link ArrayList}.
      * 
+     * The Interception point for the logging interceptor and logging context object
+     * called here
+     * 
      * @param arg
      */
     public void addRental(Rental arg) {
@@ -36,6 +39,12 @@ public class Customer {
         return _rentals;
     }
 
+    /**
+     * The interception point for the payment interceptor and payment context object
+     * called here
+     * 
+     * @return {@link String} result
+     */
     public String statement() {
         String result = "Rental Record for " + getName() + "\n";
         for (Rental rental : _rentals) {
