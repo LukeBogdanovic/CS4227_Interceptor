@@ -35,10 +35,6 @@ public class Customer {
         return _name;
     }
 
-    public List<Rental> getRentals() {
-        return _rentals;
-    }
-
     /**
      * The interception point for the payment interceptor and payment context object
      * called here
@@ -52,7 +48,7 @@ public class Customer {
         }
         result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
         result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
-        dispatcher.dispatchClientRequestInterceptor(new PaymentContextObject(this, getTotalCharge()));
+        dispatcher.dispatchClientRequestInterceptor(new PaymentContextObject(this, _rentals, getTotalCharge()));
         return result;
     }
 
